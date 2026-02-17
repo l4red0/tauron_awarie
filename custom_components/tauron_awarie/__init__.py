@@ -42,7 +42,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id, None)
         # Close the session when unloading the config entry
-        if hasattr(entry, 'runtime_data') and entry.runtime_data:
+        if hasattr(entry, "runtime_data") and entry.runtime_data:
             session = entry.runtime_data.get("session")
             if session and not session.closed:
                 await session.close()

@@ -115,7 +115,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     # ---------- step 1: city search + calendar + optional manual ----------
 
     async def async_step_user(
-        self, user_input: dict[str, Any] | None = None
+        self,
+        user_input: dict[str, Any] | None = None,
     ) -> FlowResult:
         """City name search, calendar toggle, or manual GAID entry."""
         errors: dict[str, str] = {}
@@ -135,7 +136,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if p and d and c:
                 # Manual GAIDs are provided, use them
                 return await self._async_create_manual_entry(p, d, c, a)
-            elif p or d or c or a:
+            if p or d or c or a:
                 # Some fields filled but not all required ones
                 errors["base"] = "invalid_manual"
             else:
@@ -145,7 +146,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     errors["city_query"] = "min_length"
                 else:
                     results = await self.hass.async_add_executor_job(
-                        _search_cities, query
+                        _search_cities,
+                        query,
                     )
                     if not results:
                         errors["city_query"] = "no_results"
@@ -163,7 +165,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         )
 
     def _build_user_schema(
-        self, user_input: dict[str, Any] | None = None
+        self,
+        user_input: dict[str, Any] | None = None,
     ) -> vol.Schema:
         """Build schema for step_user with dynamic calendar selector."""
         cal_default = (
@@ -192,7 +195,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     vol.Optional(CONF_DISTRICT_GAID, default=0): int,
                     vol.Optional(CONF_COMMUNE_GAID, default=0): int,
                     vol.Optional(CONF_CITY_AREA_ID, default=0): int,
-                }
+                },
             ),
             {"collapsed": True},
         )
@@ -212,7 +215,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     # ---------- step 2: select city from results ----------
 
     async def async_step_select_city(
-        self, user_input: dict[str, Any] | None = None
+        self,
+        user_input: dict[str, Any] | None = None,
     ) -> FlowResult:
         """Select city from search results."""
         if user_input is not None:
@@ -229,7 +233,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             self._selected_city = city
             self._city_areas_map = await self.hass.async_add_executor_job(
-                _load_city_areas
+                _load_city_areas,
             )
 
             if city["district_gaid"] in self._city_areas_map:
@@ -249,7 +253,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     f"Gm. {r['commune_name']})"
                 )
                 for r in self._search_results
-            }
+            },
         )
 
         return self.async_show_form(
@@ -260,7 +264,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     # ---------- step 3: optional area (dzielnica) ----------
 
     async def async_step_select_area(
-        self, user_input: dict[str, Any] | None = None
+        self,
+        user_input: dict[str, Any] | None = None,
     ) -> FlowResult:
         """Select dzielnica for cities that have areas."""
         district_gaid = self._selected_city["district_gaid"]
@@ -268,7 +273,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             return await self._async_create_entry(
-                city_area_id=int(user_input["city_area"])
+                city_area_id=int(user_input["city_area"]),
             )
 
         options = {str(a["AreaId"]): a["Name"] for a in areas}
@@ -345,7 +350,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             ),
         )
 
-    def _entry_data(self, **kwargs: Any) -> dict[str, Any]:
+    def _entry_data(self, **kwargs: str | int | bool | None) -> dict[str, Any]:
         """Compose the config entry data dict."""
         return {
             CONF_CITY_GAID: kwargs["city_gaid"],

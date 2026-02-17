@@ -7,10 +7,9 @@ import math
 from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING, Any
 
-from homeassistant.components.sensor import SensorEntity
 import aiohttp
 from aiohttp.resolver import ThreadedResolver
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.components.sensor import SensorEntity
 from homeassistant.util import dt as dt_util
 
 from .const import (
@@ -47,7 +46,7 @@ SCAN_INTERVAL = timedelta(hours=12)
 
 
 async def async_setup_entry(
-    hass: HomeAssistant,
+    hass: HomeAssistant,  # noqa: ARG001
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
@@ -105,8 +104,9 @@ class TauronAwarieSensor(SensorEntity):
             uid_parts.append(city)
         if self._params.city_area_id:
             uid_parts.append(str(self._params.city_area_id))
-        self._attr_unique_id = (
-            "tauron_awarie_" + "_".join(uid_parts).lower().replace(" ", "_")
+        self._attr_unique_id = "tauron_awarie_" + "_".join(uid_parts).lower().replace(
+            " ",
+            "_",
         )
 
         self._district_name = district
@@ -130,10 +130,9 @@ class TauronAwarieSensor(SensorEntity):
     @property
     def device_info(self) -> dict[str, Any]:
         """Group entities under a device."""
-        identifier = (
-            f"{self._params.district_gaid}_{self._city_name}".lower().replace(
-                " ", "_"
-            )
+        identifier = f"{self._params.district_gaid}_{self._city_name}".lower().replace(
+            " ",
+            "_",
         )
         return {
             "identifiers": {(DOMAIN, identifier)},
@@ -161,19 +160,17 @@ class TauronAwarieSensor(SensorEntity):
 
             now = datetime.now(UTC)
             active = [o for o in outages if o.end_date > now]
-            next_outage = (
-                min(active, key=lambda o: o.start_date) if active else None
-            )
+            next_outage = min(active, key=lambda o: o.start_date) if active else None
 
             self._attr_native_value = None
             self._attr_extra_state_attributes = self._base_attrs(
-                len(active), next_outage, active
+                len(active),
+                next_outage,
+                active,
             )
 
             if next_outage:
-                delta_s = max(
-                    (next_outage.start_date - now).total_seconds(), 0
-                )
+                delta_s = max((next_outage.start_date - now).total_seconds(), 0)
                 self._attr_native_value = math.ceil(delta_s / 86400.0)
 
             if self._create_calendar and self._calendar_entity:
@@ -217,7 +214,8 @@ class TauronAwarieSensor(SensorEntity):
             attrs[ATTR_NEXT_END] = next_outage.end_date.isoformat()
             attrs[ATTR_NEXT_MESSAGE] = next_outage.message
             attrs[ATTR_NEXT_TYPE] = OUTAGE_TYPE.get(
-                next_outage.type_id, str(next_outage.type_id)
+                next_outage.type_id,
+                str(next_outage.type_id),
             )
         return attrs
 
@@ -241,9 +239,7 @@ class TauronAwarieSensor(SensorEntity):
             local_start = dt_util.as_local(outage.start_date)
             local_end = dt_util.as_local(outage.end_date)
 
-            if await self._calendar_event_exists(
-                summary, outage.message, local_start
-            ):
+            if await self._calendar_event_exists(summary, outage.message, local_start):
                 self._posted_event_ids.add(outage.outage_id)
                 continue
 
@@ -261,9 +257,7 @@ class TauronAwarieSensor(SensorEntity):
                     blocking=True,
                 )
                 self._posted_event_ids.add(outage.outage_id)
-                _LOGGER.debug(
-                    "Created calendar event for outage %s", outage.outage_id
-                )
+                _LOGGER.debug("Created calendar event for outage %s", outage.outage_id)
             except Exception:  # noqa: BLE001
                 _LOGGER.warning(
                     "Failed to create calendar event for %s",
@@ -274,7 +268,6 @@ class TauronAwarieSensor(SensorEntity):
     async def async_will_remove_from_hass(self) -> None:
         """Entity is being removed from Home Assistant."""
         # Session cleanup is handled at the config entry level
-        pass
 
     async def _calendar_event_exists(
         self,
@@ -292,9 +285,7 @@ class TauronAwarieSensor(SensorEntity):
                 return False
             day_start = dt_util.start_of_local_day(start)
             day_end = day_start + timedelta(days=1)
-            events = await entity.async_get_events(
-                self.hass, day_start, day_end
-            )
+            events = await entity.async_get_events(self.hass, day_start, day_end)
             for ev in events:
                 ev_summary = getattr(ev, "summary", "") or ""
                 ev_desc = getattr(ev, "description", "") or ""

@@ -61,9 +61,7 @@ class TauronOutageFetcher:
                 timeout=aiohttp.ClientTimeout(total=_REQUEST_TIMEOUT),
             ) as resp:
                 if resp.status != _HTTP_OK:
-                    _LOGGER.error(
-                        "Tauron WAAPI HTTP %s for %s", resp.status, url
-                    )
+                    _LOGGER.error("Tauron WAAPI HTTP %s for %s", resp.status, url)
                     return []
                 data = await resp.json()
                 return self._parse(data)
@@ -104,7 +102,7 @@ class TauronOutageFetcher:
                         message=item.get("Message", ""),
                         type_id=item.get("TypeId", 0),
                         is_active=item.get("IsActive", True),
-                    )
+                    ),
                 )
             except (KeyError, ValueError) as err:
                 _LOGGER.debug("Skip malformed outage item: %s", err)
