@@ -12,7 +12,6 @@
                     "manual": {
                         "name": "Wprowadź ręcznie wszystkie GAID",
                         "data": {
-                            "manual_gaid": "Wpisz GAID ręcznie",
                             "province_gaid": "Province GAID (województwo)",
                             "district_gaid": "District GAID (powiat)",
                             "commune_gaid": "Commune GAID (gmina)",

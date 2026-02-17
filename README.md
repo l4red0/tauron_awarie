@@ -69,26 +69,40 @@ When calendar integration is enabled, the integration creates timed events for p
 - Description: Outage location details
 - Start/End times: Exact outage schedule
 
+> [!TIP]
+> You can use additional HA integrations to better present data on your dashboard. For example, [hassio-trash-card](https://github.com/idaho/hassio-trash-card)
+
 ## Requirements
 
 - Home Assistant 2025.2.4 or later
 
 ## FAQ
 
-<details>
-<summary>What should I do if my city isn't listed?</summary>
+* **What should I do if my city isn't listed?**
+
 The local city database may be incomplete. If your city isn't listed, you can use the "Manually add GAID" option, which is visible when adding entities. To obtain the appropriate GAID for your place of residence, you must extract it from the URL address of the application on the website https://www.tauron-dystrybucja.pl/wylaczenia in the "Check exclusions for the district or municipality" section.
-</details>
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+* **My electricity supplier is Energa. What about me?**
+
+ That's great, because this integration is based on an original idea by @chauek, who created this [integration of outage information for the Energa supplier](https://github.com/chauek/energa_awarie).
+
+* **I added my location, but no outages or interruptions were added to the calendar. Why?**
+
+This almost certainly means that there are no planned outages for the next 7 days. And that no outages are currently occurring.
+
+* **How often does Home Assistant update information from the API about outages and malfunctions?**
+
+To conserve Tauron Dystrybucja server resources, updates occur once every 12 hours. For the same reason, this integration also has a built-in (quite extensive) database of Tauron-specific city identifiers.
 
 ## Support
 
 - [GitHub Issues](https://github.com/l4red0/tauron_awarie/issues) for bug reports and feature requests
 - [Home Assistant Community](https://community.home-assistant.io) for general HA questions
 
-## Disclaimer
+#### Disclaimer
 
 This integration is not officially affiliated with Tauron Dystrybucja. Use at your own risk. The authors are not responsible for any damages or issues caused by the use of this integration.
+#### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

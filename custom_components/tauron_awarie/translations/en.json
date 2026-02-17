@@ -12,7 +12,6 @@
                     "manual": {
                         "name": "Manually enter all GAIDs",
                         "data": {
-                            "manual_gaid": "Enter GAID manually",
                             "province_gaid": "Province GAID",
                             "district_gaid": "District GAID",
                             "commune_gaid": "Commune GAID",

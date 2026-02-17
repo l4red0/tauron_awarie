@@ -122,22 +122,21 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             # Store calendar settings for later entry creation
-            self._create_calendar = user_input.get(
-                CONF_CREATE_CALENDAR, True
-            )
-            self._calendar_entity = user_input.get(
-                CONF_CALENDAR_ENTITY, ""
-            ) or ""
+            self._create_calendar = user_input.get(CONF_CREATE_CALENDAR, True)
+            self._calendar_entity = user_input.get(CONF_CALENDAR_ENTITY, "") or ""
 
-            # Manual GAID path
+            # Manual GAID path - check if GAID fields are filled
             manual = user_input.get("manual") or {}
-            if manual.get("manual_gaid"):
-                p = manual.get(CONF_PROVINCE_GAID, 0)
-                d = manual.get(CONF_DISTRICT_GAID, 0)
-                c = manual.get(CONF_COMMUNE_GAID, 0)
-                a = manual.get(CONF_CITY_AREA_ID, 0)
-                if p and d and c:
-                    return await self._async_create_manual_entry(p, d, c, a)
+            p = manual.get(CONF_PROVINCE_GAID, 0)
+            d = manual.get(CONF_DISTRICT_GAID, 0)
+            c = manual.get(CONF_COMMUNE_GAID, 0)
+            a = manual.get(CONF_CITY_AREA_ID, 0)
+
+            if p and d and c:
+                # Manual GAIDs are provided, use them
+                return await self._async_create_manual_entry(p, d, c, a)
+            elif p or d or c or a:
+                # Some fields filled but not all required ones
                 errors["base"] = "invalid_manual"
             else:
                 # Search path
@@ -168,9 +167,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ) -> vol.Schema:
         """Build schema for step_user with dynamic calendar selector."""
         cal_default = (
-            user_input.get(CONF_CALENDAR_ENTITY)
-            if user_input
-            else vol.UNDEFINED
+            user_input.get(CONF_CALENDAR_ENTITY) if user_input else vol.UNDEFINED
         )
 
         # Discover existing calendar entities
@@ -182,22 +179,15 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         }
 
         if calendar_options:
-            schema_dict[
-                vol.Optional(
-                    CONF_CALENDAR_ENTITY, default=cal_default
-                )
-            ] = vol.In(calendar_options)
+            schema_dict[vol.Optional(CONF_CALENDAR_ENTITY, default=cal_default)] = (
+                vol.In(calendar_options)
+            )
         else:
-            schema_dict[
-                vol.Optional(
-                    CONF_CALENDAR_ENTITY, default=cal_default
-                )
-            ] = str
+            schema_dict[vol.Optional(CONF_CALENDAR_ENTITY, default=cal_default)] = str
 
         schema_dict[vol.Optional("manual")] = section(
             vol.Schema(
                 {
-                    vol.Optional("manual_gaid", default=False): bool,
                     vol.Optional(CONF_PROVINCE_GAID, default=0): int,
                     vol.Optional(CONF_DISTRICT_GAID, default=0): int,
                     vol.Optional(CONF_COMMUNE_GAID, default=0): int,
@@ -216,9 +206,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             for s in self.hass.states.async_all()
             if s.entity_id.startswith("calendar.")
         ]
-        pairs.sort(
-            key=lambda p: unicodedata.normalize("NFKD", p[1]).casefold()
-        )
+        pairs.sort(key=lambda p: unicodedata.normalize("NFKD", p[1]).casefold())
         return dict(pairs)
 
     # ---------- step 2: select city from results ----------
@@ -233,19 +221,15 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             selected_gaid = int(user_input["city"])
             city = next(
-                (
-                    r
-                    for r in self._search_results
-                    if r["gaid"] == selected_gaid
-                ),
+                (r for r in self._search_results if r["gaid"] == selected_gaid),
                 None,
             )
             if city is None:
                 return await self.async_step_user()
 
             self._selected_city = city
-            self._city_areas_map = (
-                await self.hass.async_add_executor_job(_load_city_areas)
+            self._city_areas_map = await self.hass.async_add_executor_job(
+                _load_city_areas
             )
 
             if city["district_gaid"] in self._city_areas_map:
@@ -254,7 +238,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return await self._async_create_entry(city_area_id=0)
 
         options: dict[str, str] = {
-            _BACK_OPTION: "\u2190 Wróć do wyszukiwania",
+            _BACK_OPTION: "\u2190",
         }
         options.update(
             {
@@ -270,9 +254,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="select_city",
-            data_schema=vol.Schema(
-                {vol.Required("city"): vol.In(options)}
-            ),
+            data_schema=vol.Schema({vol.Required("city"): vol.In(options)}),
         )
 
     # ---------- step 3: optional area (dzielnica) ----------
@@ -293,16 +275,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="select_area",
-            data_schema=vol.Schema(
-                {vol.Required("city_area"): vol.In(options)}
-            ),
+            data_schema=vol.Schema({vol.Required("city_area"): vol.In(options)}),
         )
 
     # ---------- entry creation ----------
 
-    async def _async_create_entry(
-        self, city_area_id: int
-    ) -> FlowResult:
+    async def _async_create_entry(self, city_area_id: int) -> FlowResult:
         """Create config entry from CSV-selected city."""
         city = self._selected_city
 
@@ -344,9 +322,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         city_area_id: int,
     ) -> FlowResult:
         """Create config entry from manually entered GAIDs."""
-        unique_id = (
-            f"manual_{district_gaid}_{commune_gaid}_{city_area_id}"
-        )
+        unique_id = f"manual_{district_gaid}_{commune_gaid}_{city_area_id}"
         await self.async_set_unique_id(unique_id)
         self._abort_if_unique_id_configured()
 
