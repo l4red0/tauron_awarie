@@ -1,0 +1,83 @@
+[
+    {
+        "CityAreas": [
+            {
+                "AreaId": 1,
+                "Name": "Farbyczna"
+            },
+            {
+                "AreaId": 2,
+                "Name": "Krzyki"
+            },
+            {
+                "AreaId": 3,
+                "Name": "Psie Pole"
+            },
+            {
+                "AreaId": 4,
+                "Name": "Stare Miasto"
+            },
+            {
+                "AreaId": 5,
+                "Name": "Śródmieście"
+            }
+        ],
+        "GAID": 1047,
+        "OwnerGAID": 2,
+        "Name": "Wrocław"
+    },
+    {
+        "CityAreas": [
+            {
+                "AreaId": 322,
+                "Name": "Błeszno, Wrzosowiak, Ostatni Grosz, Raków"
+            },
+            {
+                "AreaId": 323,
+                "Name": "Lisiniec, Grabówka, Parkitka"
+            },
+            {
+                "AreaId": 324,
+                "Name": "Północ, Aniołów-Wyczerpy, Kiedrzyn"
+            },
+            {
+                "AreaId": 325,
+                "Name": "Stare Miasto, Zawodzie-Dąbie, Mirów"
+            },
+            {
+                "AreaId": 326,
+                "Name": "Stradom, Kawodrza-Gnaszyn, Dźbów"
+            },
+            {
+                "AreaId": 327,
+                "Name": "Tysiąclecie, Śródmieście, Podjasnogórska, Trzech Wieszczów"
+            }
+        ],
+        "GAID": 104,
+        "OwnerGAID": 24,
+        "Name": "Czestochowa"
+    },
+    {
+        "CityAreas": [
+            {
+                "AreaId": 406,
+                "Name": "Krowodrza"
+            },
+            {
+                "AreaId": 407,
+                "Name": "Nowa Huta"
+            },
+            {
+                "AreaId": 408,
+                "Name": "Podgórze"
+            },
+            {
+                "AreaId": 409,
+                "Name": "Śródmieście"
+            }
+        ],
+        "GAID": 951,
+        "OwnerGAID": 12,
+        "Name": "Kraków"
+    }
+]

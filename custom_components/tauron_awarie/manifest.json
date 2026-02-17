@@ -1,0 +1,19 @@
+{
+  "domain": "tauron_awarie",
+  "name": "Tauron Awarie",
+  "codeowners": [
+    "@l4red0"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/l4red0/tauron_awarie",
+  "issue_tracker": "https://github.com/l4red0/tauron_awarie/issues",
+  "iot_class": "cloud_polling",
+  "integration_type": "service",
+  "version": "0.1.0",
+  "requirements": [
+    "aiohttp>=3.9.1"
+  ],
+  "loggers": [
+    "custom_components.tauron_awarie"
+  ]
+}

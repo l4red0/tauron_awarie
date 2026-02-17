@@ -1,0 +1,48 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Wpisz nazwę miasta (minimum 3 znaki)",
+                "data": {
+                    "city_query": "Nazwa miasta",
+                    "create_calendar": "Dodaj awarie do kalendarza",
+                    "calendar_entity": "Kalendarz (encja)"
+                },
+                "sections": {
+                    "manual": {
+                        "name": "Wprowadź ręcznie wszystkie GAID",
+                        "data": {
+                            "manual_gaid": "Wpisz GAID ręcznie",
+                            "province_gaid": "Province GAID (województwo)",
+                            "district_gaid": "District GAID (powiat)",
+                            "commune_gaid": "Commune GAID (gmina)",
+                            "city_area_id": "City Area ID (dzielnica, 0 = brak)"
+                        }
+                    }
+                }
+            },
+            "select_city": {
+                "description": "Wybierz miasto z listy wyników",
+                "data": {
+                    "city": "Miasto"
+                }
+            },
+            "select_area": {
+                "description": "Wybierz dzielnicę",
+                "data": {
+                    "city_area": "Dzielnica"
+                }
+            }
+        },
+        "error": {
+            "min_length": "Wpisz co najmniej 3 znaki",
+            "no_results": "Nie znaleziono wyników dla podanej nazwy",
+            "too_many_results": "Zbyt wiele wyników, wpisz dokładniejszą nazwę",
+            "invalid_manual": "Podaj Province GAID, District GAID i Commune GAID",
+            "unknown": "Wystąpił nieznany błąd"
+        },
+        "abort": {
+            "already_configured": "To miasto jest już skonfigurowane"
+        }
+    }
+}

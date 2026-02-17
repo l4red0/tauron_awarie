@@ -1,5 +1,10 @@
 {
-    "name": "Integration blueprint",
+    "name": "Tauron Awarie",
     "homeassistant": "2025.2.4",
-    "hacs": "2.0.5"
+    "hacs": "2.0.5",
+    "content_in_root": false,
+    "render_readme": true,
+    "country": [
+        "PL"
+    ]
 }

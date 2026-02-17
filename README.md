@@ -1,46 +1,101 @@
-# Notice
+# Tauron Awarie (Home Assistant)
 
-The component and platforms in this repository are not meant to be used by a
-user, but as a "blueprint" that custom component developers can build
-upon, to make more awesome stuff.
+[![GitHub Release][releases-shield]][releases]
+[![License][license-shield]](LICENSE)
+[![hacs_badge](https://img.shields.io/badge/HACS-DEFAULT-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-HAVE FUN! 😎
+[![GitHub Activity][commits-shield]][commits]
+![downloads][downloads-badge]
+![Build][build-badge]
 
-## Why?
+Home Assistant integration for Tauron power outage information.
+🇵🇱 Polska wersja dokumentacji jest dostępna [tutaj](./README.pl.md).
 
-This is simple, by having custom_components look (README + structure) the same
-it is easier for developers to help each other and for users to start using them.
+![Calendar](./docs/calendar.png)
 
-If you are a developer and you want to add things to this "blueprint" that you think more
-developers will have use for, please open a PR to add it :)
+## Features
 
-## What?
+- **Real-time Outage Monitoring**: Fetches current and planned power outages from Tauron Dystrybucja's API
+- **Location-based Filtering**: Configure for specific cities, districts, and communes in Poland
+- **Calendar Integration**: Automatically create calendar events for planned outages
+- **Polish Localization**: Full Polish language support
 
-This repository contains multiple files, here is a overview:
+## Installation
 
-File | Purpose | Documentation
--- | -- | --
-`.devcontainer.json` | Used for development/testing with Visual Studio Code. | [Documentation](https://code.visualstudio.com/docs/remote/containers)
-`.github/ISSUE_TEMPLATE/*.yml` | Templates for the issue tracker | [Documentation](https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository)
-`custom_components/integration_blueprint/*` | Integration files, this is where everything happens. | [Documentation](https://developers.home-assistant.io/docs/creating_component_index)
-`CONTRIBUTING.md` | Guidelines on how to contribute. | [Documentation](https://help.github.com/en/github/building-a-strong-community/setting-guidelines-for-repository-contributors)
-`LICENSE` | The license file for the project. | [Documentation](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository)
-`README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions. | [Documentation](https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax)
-`requirements.txt` | Python packages used for development/lint/testing this integration. | [Documentation](https://pip.pypa.io/en/stable/user_guide/#requirements-files)
+### HACS (Recommended)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?repository=https%3A%2F%2Fgithub.com%2Fl4red0%2Ftauron_awarie&owner=l4red0&category=Integration)
 
-## How?
+1. Add this repository to HACS as a custom repository
+2. Search for "Tauron Awarie" in the HACS integrations
+3. Install and restart Home Assistant
+4. Add the integration through the UI
 
-1. Create a new repository in GitHub, using this repository as a template by clicking the "Use this template" button in the GitHub UI.
-1. Open your new repository in Visual Studio Code devcontainer (Preferably with the "`Dev Containers: Clone Repository in Named Container Volume...`" option).
-1. Rename all instances of the `integration_blueprint` to `custom_components/<your_integration_domain>` (e.g. `custom_components/awesome_integration`).
-1. Rename all instances of the `Integration Blueprint` to `<Your Integration Name>` (e.g. `Awesome Integration`).
-1. Run the `scripts/develop` to start HA and test out your new integration.
+### Manual Installation
 
-## Next steps
+1. Copy the `custom_components/tauron_awarie` folder to your Home Assistant `custom_components` directory
+2. Restart Home Assistant
+3. Add the integration through the UI
 
-These are some next steps you may want to look into:
-- Add tests to your integration, [`pytest-homeassistant-custom-component`](https://github.com/MatthewFlamm/pytest-homeassistant-custom-component) can help you get started.
-- Add brand images (logo/icon) to https://github.com/home-assistant/brands.
-- Create your first release.
-- Share your integration on the [Home Assistant Forum](https://community.home-assistant.io/).
-- Submit your integration to [HACS](https://hacs.xyz/docs/publish/start).
+## Configuration
+
+The integration uses Tauron WAAPI to fetch outage data. Configuration involves:
+
+1. **City Selection**: Search and select your city
+2. **District Selection**: For cities with multiple districts (like Wrocław), choose your specific area
+3. **Calendar Integration**: Optionally enable calendar event creation for planned outages
+
+### Configuration Options
+
+- **City Search**: Type at least 3 characters to search for Polish cities
+- **Manual GAID Entry**: Advanced option to manually enter GAID codes if automatic search doesn't work
+- **Calendar Creation**: Toggle to create calendar events for outages
+
+## Sensors
+
+The integration provides a sensor that shows:
+
+- Days until the next planned outage
+- Detailed outage information (start time, end time, description, type)
+- List of all upcoming outages
+- Location information (province, district, commune, city)
+
+### Sensor Attributes
+
+- `next_start`: ISO timestamp of next outage start
+- `next_end`: ISO timestamp of next outage end
+- `next_message`: Description of the outage location/details
+- `next_type`: Type of outage (Planowane/Awaryjne)
+- `outage_count`: Total number of upcoming outages
+- `outages`: Array of all outage objects
+
+## Calendar Events
+
+When calendar integration is enabled, the integration creates timed events for planned outages with:
+
+- Summary: "Tauron [Type] - [City Name]"
+- Description: Outage location details
+- Start/End times: Exact outage schedule
+
+## Requirements
+
+- Home Assistant 2025.2.4 or later
+
+## FAQ
+
+<details>
+<summary>What should I do if my city isn't listed?</summary>
+The local city database may be incomplete. If your city isn't listed, you can use the "Manually add GAID" option, which is visible when adding entities. To obtain the appropriate GAID for your place of residence, you must extract it from the URL address of the application on the website https://www.tauron-dystrybucja.pl/wylaczenia in the "Check exclusions for the district or municipality" section.
+</details>
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+- [GitHub Issues](https://github.com/l4red0/tauron_awarie/issues) for bug reports and feature requests
+- [Home Assistant Community](https://community.home-assistant.io) for general HA questions
+
+## Disclaimer
+
+This integration is not officially affiliated with Tauron Dystrybucja. Use at your own risk. The authors are not responsible for any damages or issues caused by the use of this integration.

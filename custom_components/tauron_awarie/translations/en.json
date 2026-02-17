@@ -1,0 +1,48 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Enter the city name (minimum 3 characters)",
+                "data": {
+                    "city_query": "City name",
+                    "create_calendar": "Add outages to calendar",
+                    "calendar_entity": "Calendar (entity)"
+                },
+                "sections": {
+                    "manual": {
+                        "name": "Manually enter all GAIDs",
+                        "data": {
+                            "manual_gaid": "Enter GAID manually",
+                            "province_gaid": "Province GAID",
+                            "district_gaid": "District GAID",
+                            "commune_gaid": "Commune GAID",
+                            "city_area_id": "City Area ID (0 = none)"
+                        }
+                    }
+                }
+            },
+            "select_city": {
+                "description": "Select a city from the results list",
+                "data": {
+                    "city": "City"
+                }
+            },
+            "select_area": {
+                "description": "Select an area",
+                "data": {
+                    "city_area": "Area/District"
+                }
+            }
+        },
+        "error": {
+            "min_length": "Enter at least 3 characters",
+            "no_results": "No results found for the provided name",
+            "too_many_results": "Too many results, please be more specific",
+            "invalid_manual": "Please provide Province, District, and Commune GAIDs",
+            "unknown": "An unknown error occurred"
+        },
+        "abort": {
+            "already_configured": "This city is already configured"
+        }
+    }
+}
