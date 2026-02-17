@@ -3,7 +3,7 @@
 
 Integracja informacji o wyłączeniach i awariach dla abonentów dostawcy energii Tauron.
 
-![Calendar](./docs/calendar.png)
+![Calendar](./docs/screen.gif)
 
 ## Funkcje
 
@@ -104,3 +104,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 #### Disclaimer
 
 Ta integracja nie jest oficjalnie powiązana z Tauron Dystrybucja. Korzystasz na własne ryzyko. Autorzy nie ponoszą odpowiedzialności za jakiekolwiek szkody lub problemy spowodowane korzystaniem z tej integracji.
+
+![Calendar](./docs/calendar.png)

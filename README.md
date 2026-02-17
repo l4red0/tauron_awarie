@@ -4,7 +4,7 @@
 Home Assistant integration for Tauron power outage information.
 ##### 🇵🇱 Polska wersja dokumentacji jest dostępna [tutaj](./README.pl.md).
 
-![Calendar](./docs/calendar.png)
+![Calendar](./docs/screen.gif)
 
 ## Features
 
@@ -106,3 +106,5 @@ This integration is not officially affiliated with Tauron Dystrybucja. Use at yo
 #### License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+![Calendar](./docs/calendar.png)
