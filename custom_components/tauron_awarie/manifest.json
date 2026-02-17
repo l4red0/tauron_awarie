@@ -7,11 +7,11 @@
   "config_flow": true,
   "documentation": "https://github.com/l4red0/tauron_awarie",
   "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/l4red0/tauron_awarie/issues",
   "loggers": [
     "custom_components.tauron_awarie"
   ],
-  "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/l4red0/tauron_awarie/issues",
   "requirements": [
     "aiohttp>=3.9.1"
   ],
