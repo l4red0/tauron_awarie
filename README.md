@@ -1,15 +1,8 @@
 # Tauron Awarie (Home Assistant)
-
-[![GitHub Release][releases-shield]][releases]
-[![License][license-shield]](LICENSE)
 [![hacs_badge](https://img.shields.io/badge/HACS-DEFAULT-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-[![GitHub Activity][commits-shield]][commits]
-![downloads][downloads-badge]
-![Build][build-badge]
-
 Home Assistant integration for Tauron power outage information.
-🇵🇱 Polska wersja dokumentacji jest dostępna [tutaj](./README.pl.md).
+##### 🇵🇱 Polska wersja dokumentacji jest dostępna [tutaj](./README.pl.md).
 
 ![Calendar](./docs/calendar.png)
 

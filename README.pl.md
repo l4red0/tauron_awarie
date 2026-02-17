@@ -1,12 +1,5 @@
 # Tauron Awarie (Home Assistant)
 
-[![GitHub Release][releases-shield]][releases]
-[![License][license-shield]](LICENSE)
-[![hacs_badge](https://img.shields.io/badge/HACS-DEFAULT-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
-
-[![GitHub Activity][commits-shield]][commits]
-![downloads][downloads-badge]
-![Build][build-badge]
 
 Integracja informacji o wyłączeniach i awariach dla abonentów dostawcy energii Tauron.
 
