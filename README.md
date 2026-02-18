@@ -1,7 +1,8 @@
 # Tauron Awarie (Home Assistant)
 [![hacs_badge](https://img.shields.io/badge/HACS-DEFAULT-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-Home Assistant integration for Tauron power outage information.
+Home Assistant integration for Tauron power outage information. Based on your location provided during setup, the integration queries the unofficial Tauron Dystrybucja API every 12 hours to check for any planned power outages or ongoing outages for the specified area within the next 7 days. If you select this option in the configuration, such an event will be added to your calendar.
+
 ##### 🇵🇱 Polska wersja dokumentacji jest dostępna [tutaj](./README.pl.md).
 
 ![Calendar](./docs/screen.gif)

@@ -1,7 +1,7 @@
 # Tauron Awarie (Home Assistant)
 
 
-Integracja informacji o wyłączeniach i awariach dla abonentów dostawcy energii Tauron.
+Integracja informacji o wyłączeniach i awariach dla abonentów dostawcy energii Tauron. Integracja na podstawie Twojej lokalizacji podanej podczas konfiguracji, odpytuje nieoficjalne API Tauron Dystrybucja co 12h aby sprawdzić czy dla podanego obszaru, w ciągu przyszłych 7 nie są planowane wyłączenia prądu bądź czy nie ma trwających awarii. Jeśli zaznaczysz opcję w konfiguracji, takie zdarzenie zostanie dodane do Twojego kalendarza.
 
 ![Calendar](./docs/screen.gif)
 
