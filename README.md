@@ -17,7 +17,7 @@ Home Assistant integration for Tauron power outage information. Based on your lo
 ## Installation
 
 ### HACS (Recommended)
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?repository=https%3A%2F%2Fgithub.com%2Fl4red0%2Ftauron_awarie&owner=l4red0&category=Integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=l4red0&repository=tauron_awarie&category=integration)
 
 1. Add this repository to HACS as a custom repository
 2. Search for "Tauron Awarie" in the HACS integrations
